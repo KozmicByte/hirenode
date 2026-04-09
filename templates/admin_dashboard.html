@@ -1,21 +1,20 @@
-<!DOCTYPE html>
+</html><!DOCTYPE html>
 <html>
 <head>
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { font-size: 0.9rem; }
-        .section-box { border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; border-radius: 4px; background: white; }
-        .strikethrough { text-decoration: line-through; color: gray; }
+        body{font-size:0.9rem;}
+        .section-box{border:1px solid #ddd;padding:15px;margin-bottom:20px;border-radius:4px;background:white;}
+        .strikethrough{text-decoration:line-through;color:gray;}
     </style>
 </head>
 <body class="bg-light">
-
     <nav class="navbar navbar-dark bg-dark mb-4">
         <div class="container">
             <span class="navbar-brand">Admin Portal</span>
             <form class="d-flex w-50" action="/admin/dashboard">
-                <input class="form-control form-control-sm me-2" name="search" placeholder="Search..." value="{{ search_query }}">
+                <input class="form-control form-control-sm me-2" name="search" placeholder="Search..." value="{{search_query}}">
                 <button class="btn btn-sm btn-info" type="submit">Search</button>
             </form>
             <a href="/" class="btn btn-sm btn-outline-light">Logout</a>
@@ -25,52 +24,103 @@
     <div class="container">
         <div class="section-box">
             <h6>New Company Requests</h6>
-            <ul class="list-group list-group-flush">
-                {% for comp in pending_comps %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ comp.name }}
-                    <a href="/approve_company/{{ comp.id }}" class="btn btn-sm btn-success">Approve</a>
-                </li>
-                {% else %}
-                <li class="list-group-item text-muted">No pending requests.</li>
-                {% endfor %}
-            </ul>
+            <table class="table table-sm">
+                <thead>
+                    <tr><th>Company Name</th><th class="text-end">Action</th></tr>
+                </thead>
+                <tbody>
+                    {% for comp in pending_comps %}
+                    <tr>
+                        <td>{{comp.name}}</td>
+                        <td class="text-end"><a href="/approve_company/{{comp.id}}" class="btn btn-sm btn-success">Approve</a></td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="2" class="text-muted">No pending requests.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
 
         <div class="row">
             <div class="col-md-6">
                 <div class="section-box">
                     <h6>Companies</h6>
-                    {% for comp in approved_comps %}
-                    <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
-                        <span class="{{ 'strikethrough' if not comp.user.is_active }}">{{ comp.name }}</span>
-                        <a href="/admin/toggle_user/{{ comp.user.id }}" class="btn btn-sm {{ 'btn-outline-danger' if comp.user.is_active else 'btn-warning' }}">
-                            {{ 'Blacklist' if comp.user.is_active else 'Activate' }}
-                        </a>
-                    </div>
-                    {% endfor %}
+                    <table class="table table-sm">
+                        <tbody>
+                            {% for comp in approved_comps %}
+                            <tr>
+                                <td class="{{'strikethrough' if not comp.user.is_active}}">{{comp.name}}</td>
+                                <td class="text-end">
+                                    <a href="/admin/toggle_user/{{comp.user.id}}" class="btn btn-sm {{'btn-outline-danger' if comp.user.is_active else 'btn-warning'}}">
+                                        {{'Blacklist' if comp.user.is_active else 'Activate'}}
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="section-box">
                     <h6>Students</h6>
-                    {% for s in students %}
-                    <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
-                        <span class="{{ 'strikethrough' if not s.user.is_active }}">{{ s.full_name }}</span>
-                        <a href="/admin/toggle_user/{{ s.user.id }}" class="btn btn-sm {{ 'btn-outline-danger' if s.user.is_active else 'btn-warning' }}">
-                            {{ 'Blacklist' if s.user.is_active else 'Activate' }}
-                        </a>
-                    </div>
-                    {% endfor %}
+                    <table class="table table-sm">
+                        <tbody>
+                            {% for s in students %}
+                            <tr>
+                                <td class="{{'strikethrough' if not s.user.is_active}}">{{s.full_name}}</td>
+                                <td class="text-end">
+                                    <a href="/admin/toggle_user/{{s.user.id}}" class="btn btn-sm {{'btn-outline-danger' if s.user.is_active else 'btn-warning'}}">
+                                        {{'Blacklist' if s.user.is_active else 'Activate'}}
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
 
-        <div class="section-box text-muted">
-            <h6>Ongoing Drives / Applications</h6>
-            <p class="small">na</p>
-        </div>
+        <h6>Ongoing drives</h6>
+        <table class="table table-sm mt-3">
+            <thead>
+                <tr><th>ID</th><th>Company</th><th>Role</th><th>Deadline</th></tr>
+            </thead>
+            <tbody>
+                {% for drive in ongoing_drives %}
+                <tr>
+                    <td>{{drive.company_id}}</td>
+                    <td>{{drive.company.name}}</td>
+                    <td>{{drive.job_title}}</td>
+                    <td>{{drive.deadline.strftime('%Y-%m-%d')}}</td>
+                </tr>
+                {% else %}
+                <tr><td colspan="4" class="text-center text-muted">No active drives.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h6>Applications</h6>
+        <table class="table table-sm mt-3">
+            <thead>
+                <tr><th>Student ID</th><th>Student Name</th><th>Drive ID</th><th>Date</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+                {% for appl in student_apps %}
+                <tr>
+                    <td>{{appl.student_id}}</td>
+                    <td>{{appl.student.full_name}}</td>
+                    <td>{{appl.drive_id}}</td>
+                    <td>{{appl.date_applied.strftime('%Y-%m-%d')}}</td>
+                    <td><a href="/application/view/{{appl.id}}/{{appl.student_id}}" class="btn btn-sm btn-link">view</a></td>
+                </tr>
+                {% else %}
+                <tr><td colspan="5" class="text-center text-muted">No applications found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </body>
 </html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body class="container mt-4">
+    <h6>Update Applications for: {{ drive.job_title }}</h6>
+<div style="border: 1px solid #ddd; padding: 15px;">
+    {% for app in drive.applications %}
+    <div class="d-flex justify-content-between border-bottom p-2 align-items-center">
+        
+        <div>
+            <strong>{{ app.student.full_name }}</strong> 
+            <br>
+            <a href="/application/view/{{ app.id }}/{{ user_id }}" class="btn btn-sm btn-link p-0">
+                review application
+            </a>
+        </div>
+
+        <form action="/company/update_status/{{ app.id }}/{{ user_id }}" method="POST" class="d-flex">
+            <select name="new_status" class="form-select form-select-sm me-2">
+                <option value="Applied" {% if app.status == 'Applied' %}selected{% endif %}>Applied</option>
+                <option value="Shortlisted" {% if app.status == 'Shortlisted' %}selected{% endif %}>Shortlisted</option>
+                <option value="Rejected" {% if app.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+            </select>
+            <button type="submit" class="btn btn-sm btn-success">save</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+    </div>
+    <a href="/company/dashboard/{{ user_id }}" class="mt-3 d-block text-decoration-none">← back</a>
+</body>
+</html>

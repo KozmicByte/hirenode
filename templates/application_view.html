@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family:sans-serif;padding:40px;">
+    <div style="max-width:600px;border:1px solid #ccc;padding:20px;">
+        <h3>Student Application</h3>
+        <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
+            <tr><td style="padding:5px 0;"><strong>Name:</strong></td><td>{{app.student.full_name}}</td></tr>
+            <tr><td style="padding:5px 0;"><strong>Education:</strong></td><td>{{app.student.education}}</td></tr>
+            <tr><td style="padding:5px 0;"><strong>Drive:</strong></td><td>{{app.drive.job_title}}</td></tr>
+            <tr><td style="padding:5px 0;"><strong>Status:</strong></td><td>{{app.status}}</td></tr>
+        </table>
+        
+        <div>
+            {% if app.student.resume_path %}
+                <a href="/view_resume/{{app.student.resume_path}}" target="_blank" style="padding:8px 15px;background:#007bff;color:white;text-decoration:none;border-radius:4px;">view resume</a>
+            {% else %}
+                <span style="color:red;margin-right:10px;">No resume uploaded</span>
+            {% endif %}
+            <a href="javascript:history.back()" style="padding:8px 15px;border:1px solid #666;text-decoration:none;color:#333;border-radius:4px;">back</a>
+        </div>
+    </div>
+</body>
+</html>

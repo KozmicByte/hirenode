@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family:sans-serif;padding:40px;">
+    <div style="max-width:600px;border:1px solid #ccc;padding:20px;position:relative;">
+        <h2 style="margin-top:0;">{{drive.job_title}}</h2>
+        <table style="width:100%;margin-bottom:20px;">
+            <tr><td style="width:120px;vertical-align:top;"><strong>Company:</strong></td><td>{{drive.company.name}}</td></tr>
+            <tr><td style="vertical-align:top;"><strong>Description:</strong></td><td>{{drive.job_description}}</td></tr>
+            <tr><td style="vertical-align:top;"><strong>Eligibility:</strong></td><td>{{drive.eligibility}}</td></tr>
+            <tr><td style="vertical-align:top;"><strong>Deadline:</strong></td><td>{{drive.deadline.strftime('%Y-%m-%d')}}</td></tr>
+        </table>
+        
+        <a href="javascript:history.back()" style="padding:10px 20px;border:1px solid blue;text-decoration:none;border-radius:5px;">Go Back</a>
+        
+        <div style="position:absolute;top:20px;right:20px;width:80px;height:80px;background:#eee;text-align:center;line-height:80px;border-radius:50%;">
+            LOGO
+        </div>
+    </div>
+</body>
+</html>

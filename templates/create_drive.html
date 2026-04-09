@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body class="container mt-5">
+    <div style="max-width: 500px; border: 1px solid #ddd; padding: 20px;">
+        <h5>Create a Drive</h5>
+        <form action="/company/create_drive/{{ user_id }}" method="POST">
+            <input type="text" name="job_title" placeholder="Job Title" class="form-control mb-2" required>
+            <textarea name="description" placeholder="Description" class="form-control mb-2"></textarea>
+            <input type="text" name="eligibility" placeholder="Eligibility Criteria" class="form-control mb-2">
+            <input type="date" name="deadline" class="form-control mb-2" required>
+            <button type="submit" class="btn btn-success w-100">save</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family:sans-serif;padding:30px;">
+    <h4>Edit Your Profile</h4>
+    <form method="POST" enctype="multipart/form-data" style="max-width:500px;">
+        <table style="width:100%;">
+            <tr>
+                <td>Full Name:</td>
+                <td><input type="text" name="full_name" value="{{student.full_name}}" style="width:100%;"></td>
+            </tr>
+            <tr>
+                <td>Education:</td>
+                <td><textarea name="education" style="width:100%;">{{student.education}}</textarea></td>
+            </tr>
+            <tr>
+                <td>Skills:</td>
+                <td><textarea name="skills" style="width:100%;">{{student.skills}}</textarea></td>
+            </tr>
+            <tr>
+                <td>Resume (PDF):</td>
+                <td>
+                    <input type="file" name="resume" accept=".pdf">
+                    {% if student.resume_path %}<br><small>Current: {{student.resume_path}}</small>{% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="padding-top:15px;">
+                    <button type="submit" style="background:blue;color:white;padding:5px 15px;">Save Profile</button>
+                    <a href="/student/dashboard/{{user_id}}" style="margin-left:10px;">Cancel</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
