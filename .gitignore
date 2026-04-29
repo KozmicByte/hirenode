@@ -1,4 +1,16 @@
 venv/
+lib64/
+pyvenv.cfg
 __pycache__/
 *.pyc
 .env
+instance/
+.DS_Store
+*.db
+*.sqlite
+*.sqlite3
+.vscode/
+.idea/
+dist/
+build/
+*.egg-info/
